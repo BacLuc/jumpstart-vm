@@ -39,8 +39,8 @@
     owner: root
     group: root
     mode: 'o-w'
-    #creates: '/opt/java/jdk-{{ jdk11_version }}+{{ jdk11_version_add }}/bin'
+    creates: '/opt/java/jdk-{{ jdk_version_string }}+{{ jdk_build }}/bin'
 
-#- name: Set facts for openjdk locations
-#  ansible.builtin.set_fact:
-#    jdk_home: '/opt/java/jdk-{{ jdk11_version }}+{{ jdk11_version_add }}'
+- name: Set facts for openjdk locations
+  ansible.builtin.set_fact:
+    jdk_home: '/opt/java/jdk-{{ jdk_version_string }}+{{ jdk_build }}'
