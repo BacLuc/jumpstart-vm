@@ -33,6 +33,7 @@
   community.general.dconf:
     key: "/org/gnome/shell/favorite-apps"
     value: "['org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.gnome.Terminal.desktop', 'jetbrains-clion.desktop', 'jetbrains-idea-ce.desktop', 'code.desktop']"
+  when: '{{ wsl_is_wsl }} == false'
 
 - name: Add german keyboard layouts
   community.general.dconf:
