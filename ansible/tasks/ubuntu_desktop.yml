@@ -9,22 +9,25 @@
   ansible.builtin.apt:
     name: python3-software-properties
     state: absent
-  when: ubuntu_desktop.rc == 1
+  when: '(ubuntu_desktop.rc == 1) and ({{ wsl_is_wsl }} == false)'
 
 - name: Install Ubuntu Desktop
   become: true
   ansible.builtin.apt:
     name: ubuntu-desktop
+  when: '{{ wsl_is_wsl }} == false'
 
 - name: Install Ubuntu Desktop missing dependencies (needed for vbox guest additions)
   become: true
   ansible.builtin.apt:
     name: linux-image-generic
+  when: '{{ wsl_is_wsl }} == false'
 
 - name: Install psutil that is needed for dconf module below
   become: true
   ansible.builtin.apt:
     name: python3-psutil
+  when: '{{ wsl_is_wsl }} == false'
 
 - name: Define all gnome favorite apps
   community.general.dconf:
@@ -35,3 +38,4 @@
   community.general.dconf:
     key: "/org/gnome/desktop/input-sources/sources"
     value: "[('xkb', 'ch'), ('xkb', 'us')]"
+  when: '{{ wsl_is_wsl }} == false'

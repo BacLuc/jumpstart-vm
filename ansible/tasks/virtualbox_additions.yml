@@ -2,6 +2,7 @@
   become: true
   ansible.builtin.package:
     name: virtualbox-guest-additions-iso
+  when: '{{ wsl_is_wsl }} == false'
 
 - name: Create virtualbox additions mount point
   become: true
@@ -9,6 +10,7 @@
     dest: /media/vbadd
     mode: "u+rw"
     state: directory
+  when: '{{ wsl_is_wsl }} == false'
 
 - name: Install virtualbox additions # noqa command-instead-of-module
   become: true
@@ -18,11 +20,13 @@
     umount /media/vbadd/
   args:
     creates: /usr/sbin/VBoxService
+  when: '{{ wsl_is_wsl }} == false'
 
 - name: Create group vboxsf
   become: true
   ansible.builtin.group:
     name: vboxsf
+  when: '{{ wsl_is_wsl }} == false'
 
 - name: Add user to vboxsf group to have access to bind mounts
   become: true
@@ -30,3 +34,4 @@
     name: "{{ ansible_env.USER }}"
     append: true
     groups: vboxsf
+  when: '{{ wsl_is_wsl }} == false'
