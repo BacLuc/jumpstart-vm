@@ -15,6 +15,9 @@
     jdk_minor_version: '0'
     jdk_patch_version: '8'
     jdk_build: '7'
+
+- name: Set facts for combined jdk version strings
+  ansible.builtin.set_fact:
     jdk_version_string: '{{ jdk_major_version }}.{{ jdk_minor_version }}.{{ jdk_patch_version }}'
 
 - name: 'Download jdk-{{ jdk_version_string }}+{{ jdk_build }}'
