@@ -35,7 +35,7 @@
   ansible.builtin.unarchive:
     src: '/opt/java/jdk-{{ jdk_version_string }}.tar.gz'
     remote_src: true
-    dest: '/opt/java/64/'
+    dest: '/opt/java'
     owner: root
     group: root
     mode: 'o-w'
