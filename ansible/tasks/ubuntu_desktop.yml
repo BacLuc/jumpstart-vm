@@ -9,34 +9,29 @@
   ansible.builtin.apt:
     name: python3-software-properties
     state: absent
-  when: (ubuntu_desktop.rc == 1) and (not wsl_is_wsl)
+  when: ubuntu_desktop.rc == 1
 
 - name: Install Ubuntu Desktop
   become: true
   ansible.builtin.apt:
     name: ubuntu-desktop
-  when: not wsl_is_wsl
 
 - name: Install Ubuntu Desktop missing dependencies (needed for vbox guest additions)
   become: true
   ansible.builtin.apt:
     name: linux-image-generic
-  when: not wsl_is_wsl
 
 - name: Install psutil that is needed for dconf module below
   become: true
   ansible.builtin.apt:
     name: python3-psutil
-  when: not wsl_is_wsl
 
 - name: Define all gnome favorite apps
   community.general.dconf:
     key: "/org/gnome/shell/favorite-apps"
     value: "['org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.gnome.Terminal.desktop', 'jetbrains-clion.desktop', 'jetbrains-idea-ce.desktop', 'code.desktop']"
-  when: not wsl_is_wsl
 
 - name: Add german keyboard layouts
   community.general.dconf:
     key: "/org/gnome/desktop/input-sources/sources"
     value: "[('xkb', 'ch'), ('xkb', 'us')]"
-  when: not wsl_is_wsl
